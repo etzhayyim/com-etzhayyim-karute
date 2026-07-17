@@ -4,7 +4,7 @@
 honest framing: できていないことは「未」と明記する。
 
 - Actor: `did:web:karute.etzhayyim.com` · ADR-2605231100 (EMR Phase 1) · DID-worker LIVE
-- **二層構造**: (1) この `20-actors/karute/` = kotoba-native **charter surface** — 11 FHIR
+- **二層構造**: (1) この this repository = kotoba-native **charter surface** — 11 FHIR
   Lexicons + 憲法ゲートテスト; (2) EMR の実装 (Svelte SuperApp + lg-karute pod + did-worker) は
   `60-apps/etzhayyim-project-karute/` + `50-infra/karute-did-web/` 側(`actor.edn` の deploy stages)。
   この台帳は **(1) の charter surface** の成熟度のみを追う(実 EMR は別レイヤ)。
@@ -18,11 +18,11 @@ honest framing: できていないことは「未」と明記する。
 | # | 項目 | 状態 | 完了イテレーション |
 |---|---|---|---|
 | 1 | ADR-2605231100 (EMR Phase 1) | ✅ | init |
-| 2 | actor-manifest.jsonld + actor.edn(deploy pipeline)+ CLAUDE.md + NOTICE | ✅ | init |
+| 2 | actor.edn + actor.edn(deploy pipeline)+ CLAUDE.md + NOTICE | ✅ | init |
 | 3 | 11 FHIR Lexicons (`com.etzhayyim.karute.*` — patient/encounter/condition/observation/medicationRequest/serviceRequest/carePlan/dispenseRecord/soapNote/homecareEpisode/homeVisit) | ✅ | init |
 | 4 | did:web:karute.etzhayyim.com worker LIVE(`50-infra/karute-did-web`) | ✅ | init |
 | 5 | **charter-gate テスト** (`methods/test_charter_gates.cljc` — 4 tests / 35 assertions) | ✅ | **iter (this)** |
-| 6 | run_tests.sh が charter-gate suite を実行(actor reflex に wired) | ✅ | **iter (this)** |
+| 6 | run_tests.clj が charter-gate suite を実行(actor reflex に wired) | ✅ | **iter (this)** |
 | 7 | encrypted-envelope 規律をスキーマ層で機械強制(`additionalProperties:false` + 平文 PHI フィールド拒否、R1) | 未 | — |
 | 8 | consent.capability の Ed25519 検証テスト(member-signed / server-refused) | 未 | — |
 | 9 | 患者 DID = 30日 rotating pseudonym(ADR-2605181200)の構造検証 | 未 | — |
@@ -44,5 +44,5 @@ lexicons を cheshire で読み、charter が依存する**構造的不変条件
   recordedBy は DID フィールド(無名/自由記述の著者は表現不能)。
 - **closed clinical vocabularies** — encounter/observation/medicationRequest の status・class・
   category・intent は閉じた FHIR value set。
-`bb.edn test:charter` に `karute.methods.test-charter-gates` を登録。`run_tests.sh` が charter
+`bb run_tests.clj` が charter
 suite を実行するよう確認(actor reflex に wired)。ゲートは一切弱めず、assert のみ。

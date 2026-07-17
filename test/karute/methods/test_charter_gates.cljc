@@ -5,7 +5,7 @@
   charter discipline is **PHI confidentiality by encryption**: every PHI-bearing record travels
   ONLY inside a `com.etzhayyim.encrypted.record` envelope (XChaCha20-Poly1305 + Signal key-wrap,
   ADR-2605181100), and the public graph carries meta only. The 11 lexicons under
-  00-contracts/lexicons/com/etzhayyim/karute/ are the FHIR INNER (decrypted) shapes that live
+  repository-local lex/*.edn are the FHIR INNER (decrypted) shapes that live
   inside that envelope — so they intentionally carry clinical content, and a 'no-plaintext-PHI'
   assertion would be WRONG here (that gate is enforced at the envelope / @etzhayyim/sdk layer,
   not in these inner types). This suite instead pins the invariants that ARE structural in the
@@ -20,21 +20,19 @@
     closed clinical vocabularies — status / class / category / intent are closed FHIR value
       sets (no arbitrary representable clinical state).
 
-  Reads central lexicons via cheshire (string keys). It weakens no gate; it asserts them.
+  Reads canonical repository-local EDN lexicons (string keys). It weakens no gate; it asserts them.
   Touches neither the substrate-wide no-server-key (G7) nor Murakumo-only (G6) invariants —
   karute holds no key (consent is an Ed25519 member-signed capability, ADR-2605231400)."
   (:require [clojure.test :refer [deftest is run-tests]]
-            [cheshire.core :as json]))
+            [clojure.edn :as edn]))
 
 #?(:clj
    (do
      (def ^:private here (.getParentFile (java.io.File. ^String *file*)))      ;; methods/
-     (def ^:private actor-dir (.getParentFile here))                          ;; karute/
-     (def ^:private root (.getParentFile (.getParentFile actor-dir)))          ;; repo root
-     (def ^:private lexdir
-       (java.io.File. root "00-contracts/lexicons/com/etzhayyim/karute"))
+     (def ^:private root (.. here getParentFile getParentFile getParentFile))
+     (def ^:private lexdir (java.io.File. root "lex"))
      (defn- lex [name]
-       (json/parse-string (slurp (java.io.File. lexdir (str name ".json")))))))
+       (edn/read-string (slurp (java.io.File. lexdir (str name ".edn")))))))
 
 (defn- record-node [doc]
   (let [main (get-in doc ["defs" "main"])]

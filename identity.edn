@@ -1,0 +1,14 @@
+{:identity/did "did:web:etzhayyim.com:actor:karute"
+ :identity/also-known-as ["at://karute.etzhayyim.com"
+                          "https://github.com/etzhayyim/com-etzhayyim-karute"
+                          "rad:bafkreidatqm4zj3hapbik2cdkx237vy5gxdhlbuhkwixiu2qp3slmjkg2a"
+                          "did:web:etzhayyim.github.io:com-etzhayyim-karute"]
+ :identity/services
+ [{:service/id "did:web:etzhayyim.com:actor:karute#atproto_pds"
+   :service/type "AtprotoPersonalDataServer"
+   :service/endpoint "https://pds.etzhayyim.com"}
+  {:service/id "did:web:etzhayyim.com:actor:karute#aozora"
+   :service/type "AozoraAppView"
+   :service/endpoint "https://aozora.app"}]
+ :identity/wire-artifact ".well-known/did.json"
+ :identity/wire-format :did-json}

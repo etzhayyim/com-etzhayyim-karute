@@ -31,7 +31,7 @@ Browser (SuperApp Mobile-First, max-w-[600px])
   ├─ HTML/JS → karute.etzhayyim.com (CF Worker edge proxy)
   └─ API → karu7t3e.etzhayyim.com/xrpc → Envoy Gateway → K8s LangServer Pod
               ↓
-       Pipelines (@actor-manifest.jsonld):
+       Pipelines (@actor.edn):
          ├─ encrypted.write → @etzhayyim/sdk (XChaCha20-Poly1305 + Signal keyWrap)
          ├─ graph.write → public meta only (innerType pointer, encryptedCid, occurredAt, *Did)
          └─ agent.chat → 相互作用 check / SOAP 要約 / FHIR Bundle 生成

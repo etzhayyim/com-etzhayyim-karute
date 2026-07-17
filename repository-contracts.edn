@@ -1,0 +1,19 @@
+{:schema-version 1
+ :repository "etzhayyim/com-etzhayyim-karute"
+ :classification :actor
+ :canonical-actor-metadata "manifest.edn"
+ :canonical-identity-metadata "identity.edn"
+ :canonical-deployment-metadata "actor.edn"
+ :canonical-lexicons "lex"
+ :wire-lexicons "wire"
+ :canonical-data-format :edn
+ :dependencies [{:repository "etzhayyim/root"
+                 :revision "b888f46142d7c13c1d0cf8e686f493e8e83de4f9"
+                 :west-path "../root"
+                 :surfaces ["50-infra/karute-did-web"
+                            "50-infra/audit-did-web"
+                            "50-infra/k8s/lg-karute"
+                            "60-apps/etzhayyim-project-karute"
+                            "10-protocol/lexicons-bundle"]}]
+ :external-wire-formats #{:did-json :atproto-lexicon-json}
+ :tests {:command ["bb" "run_tests.clj"]}}
